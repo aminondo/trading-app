@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import LiveData from "../../data/LiveData.Service";
 import { executeTransaction } from "../../data/Transaction.Service";
 import ExecuteStockTransaction from './ExecuteStockTransaction';
-
+import { ActiveContext } from '../../context/StocksContext';
 
 interface StockItemProps {
     symbol: string;
@@ -15,7 +15,7 @@ const StockItem = (props: StockItemProps) => {
   const [shares, setShares] = useState(0);
   const [modal, setModal] = useState<boolean>(false);
   const [type, setType] = useState<string>("BUY")
-  
+  const { symbol, changeSymbol } = useContext(ActiveContext);
   const handleBuy = (amount: number) => {
     const totalSum = shares + amount;
     setShares(totalSum);
@@ -44,7 +44,7 @@ const StockItem = (props: StockItemProps) => {
     return (
         <>
           <ExecuteStockTransaction show={modal} onClose={closeModal} onChange={type == "BUY" ? handleBuy : handleSell} type={type} stockSymbol={props.symbol}/>
-          <div className="stock-list__grid-cell">{props.symbol}</div>
+          <div onClick={() => changeSymbol(props.symbol)} className="stock-list__grid-cell">{props.symbol}</div>
           <div className="stock-list__grid-cell">{price}</div>
           <div className="stock-list__grid-cell">
               <a onClick={() => clickBuy()}><span className="btn-transaction btn-transaction--buy">buy</span></a>

@@ -1,7 +1,7 @@
 
 export interface allocationData {
-  symbol?: string;
-  amount?: number;
+  symbol: string;
+  amount: number;
 }
 
 export const getAllocations = async (): Promise<allocationData[]> => {

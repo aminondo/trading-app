@@ -4,13 +4,16 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './App.css';
 import { ActiveContextProvider } from "./context/StocksContext"
+import { AssetsContextProvider } from "./context/AssetsContext";
 //import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ActiveContextProvider>
-      <App />
-    </ActiveContextProvider>
+    <AssetsContextProvider>
+      <ActiveContextProvider>
+        <App />
+      </ActiveContextProvider>
+    </AssetsContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

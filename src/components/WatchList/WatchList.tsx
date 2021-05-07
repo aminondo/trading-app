@@ -11,7 +11,7 @@ export interface Stock {
 }
 
 const WatchList = () => {
-  const [watchList, setWatchList] = useState<{ items: Stock[] }>()
+  const [watchList, setWatchList] = useState<{ items: Stock[] }>({ items: []})
   const [modal, setModal] = useState<boolean>(false);
   const [owned, setOwned] = useState<allocationData[]>([])
   const { symbol, changeSymbol } = useContext(ActiveContext);
@@ -75,7 +75,7 @@ const WatchList = () => {
     <div>
       <section className="stock-list">
         <h2 className="stock-list__title">Stocks that I follow <a onClick={openModal}><span className="stock-list__btn stock-list__btn--add">+</span></a></h2>
-        <AddToWatchList show={modal} onAdd={handleAdd} onClose={closeModal}/*symbol={"STRK"}*//>
+        <AddToWatchList show={modal} onAdd={handleAdd} onClose={closeModal} watchList={watchList.items}/*symbol={"STRK"}*//>
         <div className="stock-list__grid">
         <div className="stock-list__grid">
           {!watchList ? <p>loading...</p> : watchList.items.length > 0 ?  
@@ -84,7 +84,7 @@ const WatchList = () => {
                 <div className="stock-list__grid-cell">
                   <a onClick={() => removeFromWatchList(stock.symbol)}><span className="stock-list__btn stock-list__btn--remove">&ndash;</span></a>
                 </div>
-                <StockItem  symbol={stock.symbol}/></div></div>
+                <StockItem symbol={stock.symbol}/></div></div>
               )}</> : <p>no stocks</p>
             
           }

@@ -2,12 +2,20 @@ import { useEffect, useState } from 'react';
 import { getTransactions } from '../../data/Transaction.Service'
 import TransactionItem from './TransactionItem';
 
-const TransationsList = () => {
+interface props {
+    symbol?: string
+}
+
+
+const TransationsList = (props: props) => {
     const [transactions, setTransactions] = useState<any>([]);
 
     useEffect(() => {
         const fetchTransactions = async () => {
-            const result = await getTransactions();
+            let result = await getTransactions();
+            if(props.symbol) {
+                result = result.filter((x:any) => {return x.symbol === props.symbol})
+            }
             setTransactions(result);
         }
         fetchTransactions()

@@ -35,6 +35,30 @@ const ExecuteStockTransaction = ({ onChange, show,type,stockSymbol, onClose }: T
   //const [stock, setStock] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
   const showHideClassName = show ? "modal visible" : "modal"
+
+
+  const handleTransaction = async () => {
+    console.log('executing');
+    const params : stockTransactionProps = {
+      symbol: stockSymbol,
+      amount,
+      side: type
+    }
+    const jsonResponse  = await executeTransaction(params);
+    console.log(jsonResponse);
+    onClose();
+  }
+
+  /*
+  const handleSell = () => {
+
+  }
+  */
+  const handleInput = (e:any) => {
+    e.preventDefault();
+    //console.log(e.target.value);
+    setAmount(e.target.value);
+  }
   //const [stocksData, stocksLoading, stocksError] = useFetch<stockData[]>('/stocks');
   
   /*
@@ -50,17 +74,15 @@ const ExecuteStockTransaction = ({ onChange, show,type,stockSymbol, onClose }: T
         <div className="modal__overlay" onClick={onClose}></div>
         <div className="modal__content">
           <div className="modal__close" onClick={onClose}>x</div>
-          <h2 className="modal__h2">{type}: {stockSymbol}</h2>
+          <h2 className="modal__h2">{type == "BUY" ?`Buy ${stockSymbol} Stock` : `Sell ${stockSymbol} Stock`}: </h2>
+          <input className="modal__number-box" type="number" name="quantity" placeholder="enter amount" onChange={handleInput}/>
+          <button onClick={() => handleTransaction()} className="modal__btn">{type == "BUY" ? "Buy" : "Sell"}</button>
           
-
           
         </div>
       </div>
     </> : null;
   return (
-    //<>
-    //    <a onClick={handleAdd}><span className="stock-list__btn stock-list__btn--add">+</span></a>
-    //</>
     <>{component}</>
   )
 }

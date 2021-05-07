@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { Stock } from './ChangeWatchList';
 import StockList from '../StockList/StockList';
-
+import { getAvailableStocks } from '../../data/Stocks.Service';
 
 export interface onAddFunction {
   (stock: Stock): void
@@ -25,21 +25,41 @@ interface stockData {
 export interface AddToWatchListProps {
   onAdd: onAddFunction,
   show: boolean,
-  onClose: closeModalFunction
+  onClose: closeModalFunction,
+  watchList: Stock[]
   //symbol: string
 }
-const AddToWatchList = ({ onAdd, show, onClose }: AddToWatchListProps) => {
+const AddToWatchList = ({ onAdd, show, onClose, watchList }: AddToWatchListProps) => {
   const [stock, setStock] = useState<string>("");
   const showHideClassName = show ? "modal visible" : "modal"
-  const [stocksData, stocksLoading, stocksError] = useFetch<stockData[]>('/stocks');
+  const [ stockData, setStockData ] = useState<stockData[]>()
+  //const [stocksData, stocksLoading, stocksError] = useFetch<stockData[]>('/stocks');
   
   //init stock value
-  if (stock == "" && !stocksLoading && stocksData) {
-    setStock(stocksData[0].symbol);
-  }
+  //if (stock == "" && !stocksLoading && stocksData) {
+  //  setStock(stocksData[0].symbol);
+  //}
+  useEffect(() => {
+    const fetchStockData = async () => {
+      const result = await getAvailableStocks();
+      setStockData(result);
+      setStock(result[0].symbol);
+      console.log(result);
+    }
+    fetchStockData()
+  }, []);
   
   
   const addToWatchList = async () => {
+    console.log(stock);
+    let exists = false;
+    for(let i=0; i< watchList.length;i++) {
+      if (watchList[i].symbol === stock) {
+        exists = true;
+        break;
+      }
+    }
+    if (!exists) {
       const response = await fetch("https://demomocktradingserver.azurewebsites.net/userdata/watchlist",
       {
           body: JSON.stringify({
@@ -53,7 +73,9 @@ const AddToWatchList = ({ onAdd, show, onClose }: AddToWatchListProps) => {
       });
 
       const jsonResponse = await response.json();
+      console.log(jsonResponse);
       jsonResponse.success && onAdd({symbol: stock})
+    }
   }
   
   const handleSelect = (e: any) => {
@@ -63,7 +85,7 @@ const AddToWatchList = ({ onAdd, show, onClose }: AddToWatchListProps) => {
 
   const handleAdd = (e: any) => {
       e.preventDefault();
-      console.log(stock)
+      //console.log(stock)
       addToWatchList();
   }
 
@@ -74,9 +96,9 @@ const AddToWatchList = ({ onAdd, show, onClose }: AddToWatchListProps) => {
         <div className="modal__content">
           <div className="modal__close" onClick={onClose}>x</div>
           <h2 className="modal__h2">Select a new stock to follow</h2>
-          {!stocksLoading && stocksData ? <>
-            <select className="modal__dropdown" onChange={handleSelect}>
-              {stocksData.map((stock: stockData) => <option value={stock.symbol} key={stock.symbol}>{stock.name}</option>)}
+          {stockData ? <>
+            <select className="modal__dropdown" onChange={handleSelect} value={stock}>
+              {stockData.map((stock: stockData) => <option value={stock.symbol} key={stock.symbol}>{stock.name}</option>)}
             </select>
             <button className="modal__btn" onClick={handleAdd}>Add</button> </>
             : <p>loading...</p>}
