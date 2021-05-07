@@ -1,15 +1,77 @@
-interface StockItemProps {
-    name: string;
-    //setHighlight: (name: string) => void;
-    //isHighlighted: boolean;
-}
+import * as Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { useContext, useEffect, useState } from 'react';
+import { getStockDataToday as getDailyStockPrice } from '../../data/Stocks.Service';
+import { ActiveContext } from '../../context/StocksContext'; 
 
-const StockGraph = (props: StockItemProps) => {
-    return (
-        <section className="stock-graph">
-            <div id="stockGraphContainer" className="stock-graph__container"><p>Stock: {props.name}</p></div>
-        </section>
-    );
+
+const StockGraph = () => {
+  const [stockData, setStockData] = useState<any>([])
+  const [period, setPeriod] = useState("today");
+  const [stockprices, setStockPrices] = useState({
+    detailed: [],
+    aggregated: [],
+  }); 
+  const {symbol, changeSymbol} = useContext(ActiveContext);
+  useEffect(() => {
+    const fetchPrice = async () => {
+      const result = await getDailyStockPrice(
+        symbol//state.selected
+      );
+      setStockPrices(result);
+    };
+    fetchPrice();
+  },[symbol]);
+
+  //console.log(state);
+  const options = {
+    chart: {
+      type: "line",
+    },
+    title: {
+      text: symbol,//state.selected,
+    },
+    subtitle: {
+      text: "",
+    },
+    xAxis: { type: "datetime" },
+    plotOptions: {
+      line: {
+        dataLabels: {
+          enabled: false,
+        },
+        enableMouseTracking: false,
+      },
+    },
+    series: [
+      {
+        name: "detailed",
+        data: stockprices.detailed.map((item: any) => ({
+          date: item.date,
+          y: item.price,
+        })),
+      },
+      {
+        name: "aggregated",
+        data: stockprices.aggregated.map((item: any) => ({
+          date: item.date,
+          y: item.price,
+        })),
+      },
+    ],
+  };
+
+  return (
+    <section>
+      <h2>Period</h2>
+      <div id='stockGraphContainer'>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+        />
+      </div>
+    </section>
+  );
 }
 
 export default StockGraph;
