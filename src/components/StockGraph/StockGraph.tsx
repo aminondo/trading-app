@@ -62,15 +62,15 @@ const StockGraph = () => {
   };
 
   return (
-    <section>
+    <div>
       <h2>Period</h2>
-      <div id='stockGraphContainer'>
+      <div id='stockGraphContainer' className="stock-graph__container">
         <HighchartsReact
           highcharts={Highcharts}
           options={options}
         />
       </div>
-    </section>
+    </div>
   );
 }
 

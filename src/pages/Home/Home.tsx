@@ -41,7 +41,9 @@ const Home = () => {
     return (
         <div>
             <WatchList/>
-            <StockGraph/>
+            <div className="stock-graph">
+                <StockGraph/>
+            </div>
             <TransactionList/>
         </div>
 
