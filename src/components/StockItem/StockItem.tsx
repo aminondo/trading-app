@@ -40,7 +40,7 @@ const StockItem = (props: StockItemProps) => {
 
   useEffect(() => {
     LiveData.subscribe(props.symbol, setPrice);
-    //return () => { LiveData.unsubscribe}
+    return LiveData.unsubscribe(props.symbol)
   }, []);
     return (
         <>

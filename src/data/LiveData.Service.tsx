@@ -21,7 +21,22 @@ const StockUpdateService = {
         setPrice(update.price);
       }
     );
+    
   },
+  unsubscribe: (symbol: string) => {
+    if (!nesClient) {
+      nesClient = new Nes.Client(
+        "wss://demomocktradingserver.azurewebsites.net"
+      );
+      const start = async () => {
+        await nesClient.connect();
+      };
+      start();
+    }
+    nesClient.unsubscribe(
+      "/livestream/" + symbol
+    );
+  }
 };
 Object.freeze(StockUpdateService);
 export default StockUpdateService;
