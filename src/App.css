@@ -323,7 +323,7 @@ app-details .stock-graph {
 }
 
 @media (min-width: 800px) {
-    app-details .stock-graph .stock-list__title {
+    .stock-title-right .stock-list__title {
         position: absolute;
         right: 0;
         margin-right: 60px;

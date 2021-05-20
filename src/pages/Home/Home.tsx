@@ -14,7 +14,9 @@ const Home = () => {
     const { items, setItems } = useContext(AssetsContext)
     
     useEffect(() => {
-        console.log(items);
+        console.log("2021-05-20T00:00:00.000Z");
+        const date= new Date("2021-05-20T00:00:00.000Z")
+        console.log(new Intl.DateTimeFormat('en-US').format(new Date("2021-05-20T00:00:00.000Z")));
         /*console.log('getting allocations');
         const fetchAssets = async () => {
             const assets: Asset[] = []; 

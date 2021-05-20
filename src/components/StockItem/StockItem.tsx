@@ -40,12 +40,13 @@ const StockItem = (props: StockItemProps) => {
 
   useEffect(() => {
     LiveData.subscribe(props.symbol, setPrice);
+    //return () => { LiveData.unsubscribe}
   }, []);
     return (
         <>
           <ExecuteStockTransaction show={modal} onClose={closeModal} onChange={type == "BUY" ? handleBuy : handleSell} type={type} stockSymbol={props.symbol}/>
           <div onClick={() => changeSymbol(props.symbol)} className="stock-list__grid-cell">{props.symbol}</div>
-          <div className="stock-list__grid-cell">{price}</div>
+          <div className="stock-list__grid-cell">{price == 0 ? "" : price.toFixed(2)}</div>
           <div className="stock-list__grid-cell">
               <a onClick={() => clickBuy()}><span className="btn-transaction btn-transaction--buy">buy</span></a>
           </div>
