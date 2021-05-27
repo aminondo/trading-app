@@ -80,14 +80,14 @@ const StockGraph = () => {
       {
         name: "detailed",
         data: stockprices.detailed.map((item: any) => ({
-          date: item.date,
+          x: new Date(item.date),
           y: item.price,
         })),
       },
       {
         name: "aggregated",
         data: stockprices.aggregated.map((item: any) => ({
-          date: item.date,
+          x: new Date(item.date),
           y: item.price,
         })),
       },
