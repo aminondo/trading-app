@@ -38,7 +38,7 @@ const ExecuteStockTransaction = ({ onChange, show,type,stockSymbol, onClose }: T
 
 
   const handleTransaction = async () => {
-    console.log('executing');
+    //console.log('executing');
     const params : stockTransactionProps = {
       symbol: stockSymbol,
       amount,

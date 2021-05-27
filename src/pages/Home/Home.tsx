@@ -1,22 +1,13 @@
-import { useContext, useEffect } from 'react';
-
-//import useFetch from '../../hooks/useFetch';
+//import { useContext, useEffect } from 'react';
 import StockGraph from '../../components/StockGraph/StockGraph';
 import WatchList from '../../components/WatchList/WatchList';
 import TransactionList from '../../components/TransactionsList/TransactionsList';
-import { AssetsContext } from '../../context/AssetsContext';
-//import { getAllocations } from '../../data/UserData.Service';
-//import { getStockPrice } from '../../data/Stocks.Service';
-
-
+//import { AssetsContext } from '../../context/AssetsContext';
 
 const Home = () => {
-    const { items, setItems } = useContext(AssetsContext)
+    //const { items, setItems } = useContext(AssetsContext)
     
-    useEffect(() => {
-        console.log("2021-05-20T00:00:00.000Z");
-        const date= new Date("2021-05-20T00:00:00.000Z")
-        console.log(new Intl.DateTimeFormat('en-US').format(new Date("2021-05-20T00:00:00.000Z")));
+    //useEffect(() => {
         /*console.log('getting allocations');
         const fetchAssets = async () => {
             const assets: Asset[] = []; 
@@ -37,9 +28,8 @@ const Home = () => {
             setItems(assets);
         }
         fetchAssets();*/
-    }, [])
-    //const data = useFetch('/stocks');
-    //console.log(data);
+    //}, [])
+    
     return (
         <div>
             <WatchList/>

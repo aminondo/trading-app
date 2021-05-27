@@ -17,7 +17,7 @@ function App() {
   const { items, setItems } = useContext(AssetsContext)
 
   useEffect(() => {
-    console.log('getting allocations');
+    //console.log('getting allocations');
     const fetchAssets = async () => {
       const assets: Asset[] = [];
       const result = await getAllocations();

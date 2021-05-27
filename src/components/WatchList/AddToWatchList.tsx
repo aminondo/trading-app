@@ -44,14 +44,13 @@ const AddToWatchList = ({ onAdd, show, onClose, watchList }: AddToWatchListProps
       const result = await getAvailableStocks();
       setStockData(result);
       setStock(result[0].symbol);
-      console.log(result);
     }
     fetchStockData()
   }, []);
   
   
   const addToWatchList = async () => {
-    console.log(stock);
+    //.log(stock);
     let exists = false;
     for(let i=0; i< watchList.length;i++) {
       if (watchList[i].symbol === stock) {
@@ -68,12 +67,12 @@ const AddToWatchList = ({ onAdd, show, onClose, watchList }: AddToWatchListProps
           }),
           method: "POST",
           headers: {
-              userid: "antonio.minondo"
+              userid: "antonio.minondo",
+              "Content-Type": "application/json",
           }
       });
 
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
       jsonResponse.success && onAdd({symbol: stock})
     }
   }
@@ -85,7 +84,6 @@ const AddToWatchList = ({ onAdd, show, onClose, watchList }: AddToWatchListProps
 
   const handleAdd = (e: any) => {
       e.preventDefault();
-      //console.log(stock)
       addToWatchList();
   }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import LiveData from "../../data/LiveData.Service";
-import { executeTransaction } from "../../data/Transaction.Service";
+//import { executeTransaction } from "../../data/Transaction.Service";
 import ExecuteStockTransaction from './ExecuteStockTransaction';
 import { ActiveContext } from '../../context/StocksContext';
 
@@ -40,7 +40,7 @@ const StockItem = (props: StockItemProps) => {
 
   useEffect(() => {
     LiveData.subscribe(props.symbol, setPrice);
-    return LiveData.unsubscribe(props.symbol)
+    //return LiveData.unsubscribe(props.symbol)
   }, []);
     return (
         <>

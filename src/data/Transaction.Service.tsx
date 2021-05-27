@@ -14,7 +14,9 @@ export const executeTransaction = async (props: stockTransactionProps) => {
       }),
       method: "POST",
       headers: {
-        userid: "antonio.minondo"
+        userid: "antonio.minondo",
+        "Content-Type": "application/json",
+
       }
     });
 

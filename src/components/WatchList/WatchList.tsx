@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import ChangeWatchList from './ChangeWatchList';
+//import ChangeWatchList from './ChangeWatchList';
 import StockItem from '../StockItem/StockItem';
 import AddToWatchList from './AddToWatchList';
-import useFetch from '../../hooks/useFetch';
+//import useFetch from '../../hooks/useFetch';
 import {getAllocations, allocationData, getWatchlist} from '../../data/UserData.Service';
 import { ActiveContext } from '../../context/StocksContext';
 
@@ -67,7 +67,7 @@ const WatchList = () => {
 }
 
   const remove = (e: any) => {
-    console.log(e);
+    //console.log(e);
     e.preventDefault()
   }
   //const component = 
@@ -79,7 +79,7 @@ const WatchList = () => {
         <div className="stock-list__grid">
         <div className="stock-list__grid">
           {!watchList ? <p>loading...</p> : watchList.items.length > 0 ?  
-              <>{watchList.items.map((stock: Stock) => <div key={stock.symbol} onClick={() => {changeSymbol(stock.symbol); console.log(symbol)}} >
+              <>{watchList.items.map((stock: Stock) => <div key={stock.symbol} onClick={() => {changeSymbol(stock.symbol);}} >
                 <div className="stock-list__grid-row" > 
                 <div className="stock-list__grid-cell">
                   <a onClick={() => removeFromWatchList(stock.symbol)}><span className="stock-list__btn stock-list__btn--remove">&ndash;</span></a>

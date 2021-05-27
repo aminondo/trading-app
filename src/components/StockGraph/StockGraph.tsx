@@ -19,7 +19,6 @@ const StockGraph = () => {
         symbol//state.selected
       );
       setStockPrices(result);
-      console.log(new Intl.DateTimeFormat('en-US').format(new Date(result.detailed[0].date)));
     };
     fetchPrice();
   },[symbol]);
@@ -30,13 +29,11 @@ const StockGraph = () => {
         symbol//state.selected
       );
       setStockPrices(result);
-      console.log(new Intl.DateTimeFormat('en-US').format(new Date(result.detailed[0].date)));
     } else {
       const result = await getStockDataYearly(
         symbol//state.selected
       );
       setStockPrices(result);
-      console.log(new Intl.DateTimeFormat('en-US').format(new Date(result.detailed[0].date)));
     }
   }
 
@@ -46,7 +43,6 @@ const StockGraph = () => {
     updateGraphData(e.target.value);
   }
 
-  //console.log(state);
   const options = {
     chart: {
       type: "line",
